@@ -18,4 +18,4 @@ jobs:
 
       - name: Validate JS file (expected to fail)
         run: |
-          npx @biomejs/biome check ./ProgramCode.js
+          npx @biomejs/biome check ./ProgramCodeModified.js
