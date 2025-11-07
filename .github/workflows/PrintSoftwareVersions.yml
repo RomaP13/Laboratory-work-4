@@ -1,0 +1,36 @@
+name: Print Software Versions (LR4)
+
+# Дозволяє запускати цей воркфлоу вручну з вкладки Actions
+on: workflow_dispatch
+
+jobs:
+  # Робота 1: Рівень обробки даних (Application Server)
+  processing-level:
+    name: 1. Processing Level Versions
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check Python version
+        run: python --version
+        
+      - name: Check Node.js version
+        run: node --version
+        
+      - name: Install Redis tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y redis-tools
+      
+      - name: Check Redis version
+        run: redis-cli --version
+
+  # Робота 2: Рівень доступу до даних (Database Server)
+  database-level:
+    name: 2. Database Level Versions
+    runs-on: ubuntu-latest
+    # Ця робота залежить від успішного завершення першої
+    needs: processing-level
+    
+    steps:
+      - name: Check PostgreSQL version
+        run: psql --version
